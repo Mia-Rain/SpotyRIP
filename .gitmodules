@@ -1,0 +1,3 @@
+[submodule "Spotbash"]
+	path = Spotbash
+	url = git://github.com/ThatGeekyWeeb/Spotbash.git
