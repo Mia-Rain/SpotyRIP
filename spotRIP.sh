@@ -9,7 +9,7 @@ cat << 'EOF'
 Spot(y)RIP ~ Spotify Playlist ripper using ytdl
 ~ Interacts with Spotbash ~ Also by: That(Geeky)Weeb (Mia)
 ***
-Usage: spotRIP.sh [-h] <PLAYLIST_ID>
+Usage: spotRIP.sh [-h] [ -i <PLAYLIST_ID> ] <YTDL OPTIONS>
 ***
 Warning! All Songs on Spotify are copyrighted, rip at your own risk!
 EOF
@@ -33,23 +33,27 @@ for i in $deps; do
 done
 }
 rip() {
-        spotbash songs "${1}" | paste -d ' ' - - > list
         while read p; do
-            	youtube-dl "$(youtube-dl -j ytsearch1:"$p" | jq .webpage_url -r)"
-        done < list
+            	youtube-dl $@ "$(youtube-dl -j ytsearch1:"$p" | jq .webpage_url -r)"
+        done <<< $(spotbash songs "$ID" | paste -d ' ' - - )
 }
 main(){
-depch
         case $1 in
             -h)
                 usage && exit 1
                 ;;
+            -i|--ID|--playlist)
+                ID=$2
+                shift 1
+                ;;
             *)
-                rip "${1}"
+                depch
+                rip "${@}"
                 ;;
         esac
+    shift 1
 }
-main $1
+main "${@}"
 if [ -f list ]; then
         rm ./list
 fi
