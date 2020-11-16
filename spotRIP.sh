@@ -47,14 +47,13 @@ main(){
                 shift 1
                 ;;
             *)
-                depch
-                rip "${@}"
+                usage && exit 1
                 ;;
         esac
     shift 1
 }
 main "${@}"
+rip "${@}"
 if [ -f list ]; then
         rm ./list
 fi
-        
