@@ -35,7 +35,8 @@ done
 rip() {
         while read p; do
             	youtube-dl $@ "$(youtube-dl -j ytsearch1:"$p" | jq .webpage_url -r)"
-        done <<< $(spotbash songs "$ID" | paste -d ' ' - - )
+        done <<< $(spotbash songs "$ID" | paste -d ' ' - - | sed "/${ID}/d" ) # This prevents errors with the ID being used
+        ## $ID will still be moved with $@, these errors would take much work to fix, -FIXME-
 }
 main(){
         case $1 in
