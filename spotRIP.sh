@@ -34,7 +34,7 @@ done
 }
 rip() {
         while read p; do
-            	youtube-dl $@ "$(youtube-dl -j ytsearch1:"$p" | jq .webpage_url -r)"
+            	youtube-dl $@ "$(youtube-dl -j ytsearch1:"$p" | jq .webpage_url -r)" -o '%(title)s.%(ext)s' --restrict-filenames # File names get 'weird' without this
         done <<< $(spotbash songs "$ID" | paste -d ' ' - - | sed "/${ID}/d" ) # This prevents errors with the ID being used
         ## $ID will still be moved with $@, these errors would take much work to fix, -FIXME-
 }
@@ -47,6 +47,8 @@ main(){
                 ID=$2
                 shift 1
                 ;;
+            "")
+               echo "";;
             *)
                 usage && exit 1
                 ;;
