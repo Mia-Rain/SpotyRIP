@@ -47,3 +47,7 @@ while read p; do
 done <<< $(spotbash songs | paste -d' ' - - )
 ```
 Above is a very simple example, although, if one has the the requiresments, it would be all that needs to be run `^^`
+
+***
+### Legal Stuff
+Dear enforcers of DCMA, the purpose of `Spot(y)RIP`, is not to circumvent or "get around", cropyright but rather to provide offline access of playlists to Premium Spotify users without an offical client. Such as users on foreign architectures, or foreign operating systems/distros.
